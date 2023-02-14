@@ -1,0 +1,53 @@
+
+.map:before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+	/*background: rgba(0,200,20, 0.5);*/
+}
+
+.map {
+	width: 100vw;
+	height: 100vw;
+	background-image: url("RossieCordovaWeb_timelapse_0001.jpg");
+	position: relative;
+}
+
+img {
+	width: 100%;
+	height: auto;
+}
+
+.spotlight {
+	width: 5%;
+	height: 5%;
+	border-radius: 50%;
+	left: 0;
+	background: white;
+	position: absolute;
+	mix-blend-mode: exclusion;
+	opacity: 0.75;
+	animation: circleMove 10s infinite;
+	box-shadow: 0 0 5px 5px white;
+}
+
+@keyframes circleMove {
+	0% {
+		left: 0;
+		top: 0;
+	}
+	20%, 80% {
+		left: 90%;
+		top: 25%;
+	}
+	100% {
+		left: 20%;
+		top: 60%;
+	}
+}
