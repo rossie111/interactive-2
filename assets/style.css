@@ -25,6 +25,13 @@ body {
 			fill: none;
 		}
 
+		img {
+			position: absolute;
+			z-index: -99;
+			width: auto;
+			height: 100vh;
+		}
+
 /*.map:before {
   content: "";
   display: block;
