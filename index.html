@@ -2,7 +2,9 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Screensaver project</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
         <!-- Include some stylesheet containing your configuration -->
         <link rel="stylesheet" href="assets/style.css">
 
@@ -12,8 +14,58 @@
     </head>
 <body>
 
-	<div class="map">
+    <!-- Option 1: Drawing a Line -->
+    <div class="demo-content align-center line-drawing-demo">
+        <svg width="auto" height="100vh" viewBox="0 0 1446.8 1085.3">
+            <g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-width="1" class="lines">
+                <path
+            class="el"
+            d="m1445.5,177.3L1336.2,2s-319.5,184.4-754.3,289.8l49.9,291.6s157.9-79.9,194.3-123.5c0,0-134.3-93.6-141.6-112.6,0,0,575.5,138.1,633.6,147.1l-67.2,344.3-59.9,57.2-375.8,41.8,499.3-251.6-218.8,151.7-371.3,229.8,67.2-609.5s278.7,476.9,372.2,624l94.4-228.9-625.4,190.7-245.1-731.2,919.5,476-376.7,172.6,353.1-357.9-784.3,16.3,270.5,409.7s-308.6-305.2-489.3-529.6C99.9,275.4,5.5,147.4,5.5,147.4l627.2,366.1-42.7-213.5,254.2,272.5"/>
+            </g>
+        </svg>
+    </div>
+
+    <script type="text/javascript">
+        anime({
+            targets: '.line-drawing-demo .lines path',
+            strokeDashoffset: [anime.setDashoffset, 0],
+            easing: 'easeInOutSine',
+            duration: 60000,
+            delay: function(el, i) { return i * 250 },
+            direction: 'alternate',
+            loop: true
+        });
+    </script>
+
+
+    <!-- Option 2: Following a Path -->
+    <!-- <div class="container">
+        <div class="circle" id="spotlight"></div>
+
+        <svg width="auto" height="100vh" viewBox="0 0 1446.8 1085.3">
+          <path
+            id="path"
+            d="m1445.5,177.3L1336.2,2s-319.5,184.4-754.3,289.8l49.9,291.6s157.9-79.9,194.3-123.5c0,0-134.3-93.6-141.6-112.6,0,0,575.5,138.1,633.6,147.1l-67.2,344.3-59.9,57.2-375.8,41.8,499.3-251.6-218.8,151.7-371.3,229.8,67.2-609.5s278.7,476.9,372.2,624l94.4-228.9-625.4,190.7-245.1-731.2,919.5,476-376.7,172.6,353.1-357.9-784.3,16.3,270.5,409.7s-308.6-305.2-489.3-529.6C99.9,275.4,5.5,147.4,5.5,147.4l627.2,366.1-42.7-213.5,254.2,272.5"/>
+        </svg>
+
+    </div>
+
+    <script type="text/javascript">
+        let motion_path = anime.path('#path');
+
+        anime({
+            targets: '#spotlight',
+            translateX: motion_path('x'),
+            translateY: motion_path('y'),
+            easing: 'linear',
+            duration: 60000,
+            loop: true,
+        });
+    </script> -->
+
+
+	<!-- <div class="map">
 		<div class="spotlight"></div>
 		<img src="assets/RossieCordovaWeb_timelapse_0039.JPG">
-	</div>
+	</div> -->
 </body
