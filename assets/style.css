@@ -32,6 +32,15 @@ body {
 			height: 100vh;
 		}
 
+		#green {
+			background-color: #233b15;
+			opacity: 0.7;
+			position: absolute;
+			z-index: -98;
+			width: 100vw;
+			height: 100vh;
+		}
+
 /*.map:before {
   content: "";
   display: block;
