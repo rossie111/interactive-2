@@ -52,12 +52,12 @@
 
 		.screensaver {
 			display: none;
-			position: absolute;
+		/*	position: absolute;
 			left: 500px;
 			top: 500px;
 			width: 300px;
 			height: 300px;
-			z-index: 1;
+			z-index: 1;*/
 		}
 
 /*.map:before {
