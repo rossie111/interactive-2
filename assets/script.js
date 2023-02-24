@@ -1,8 +1,8 @@
-$('document').ready(function(){
+/*$('document').ready(function(){
 	alert('hi');
-})
+})*/
 
-$('document').ready(function(){
+$(document).ready(function(){
 	var mouseIdle;
 	var screensaverState = false;
 	var timeIdle = 3;
@@ -17,7 +17,7 @@ $('document').ready(function(){
 		screensaverState = false;
 	};
 
-	$('document').mousemove(function(){
+	$(document).mousemove(function(){
 		clearTimeout(mouseIdle);
 
 		if (screensaverState) {
@@ -32,7 +32,7 @@ $('document').ready(function(){
 	$(document).mousemove(function(){
 		clearTimeout(mouseIdle);
 
-		mouseIdle = setTImeout(function(){
+		mouseIdle = setTimeout(function(){
 			displayScreensaver();
 		}, 1000 * timeIdle);
 	});
