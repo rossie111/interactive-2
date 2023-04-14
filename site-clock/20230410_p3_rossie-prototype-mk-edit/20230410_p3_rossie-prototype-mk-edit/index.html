@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<style type="text/css">
+		#chi1, #chi2, #chi3 {
+			display: none;
+		}
+		.images {
+			position: absolute;
+		}
+	</style>
+</head>
+<body>
+
+   <img class="images" id="chi1" src="assets/01_chihuahua.webp">
+   <img class="images" id="chi2" src="assets/02_chihuahua.jpeg">
+   <img class="images" id="chi3" src="assets/03_chihuahua.webp">
+
+
+<script type="text/javascript">
+	var today = new Date();
+	var hours = today.getHours();
+	var chi1 = document.querySelector("#chi1");
+	var chi2 = document.querySelector("#chi2");
+	var chi3 = document.querySelector("#chi3");
+
+	setInterval(function(){
+		if (hours >= 0 && hours <= 7) {
+			chi1.style.display = "block";
+		}
+		if (hours >= 8 && hours <= 15) {
+			chi1.style.display = "block";
+			chi2.style.display = "block";
+		}
+		if (hours >= 16 && hours <= 23) {
+			chi1.style.display = "block";
+			chi2.style.display = "block";
+			chi3.style.display = "block";
+		}
+	}, 1000);
+</script>
+
+</body>
+</html>
