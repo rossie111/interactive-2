@@ -312,6 +312,8 @@
 	var ss143 = document.querySelector("#ss143");
 	var ss144 = document.querySelector("#ss144");
 
+	var randomizer = document.querySelector(".random");
+
 	setInterval(function(){
 		if (hours >= 0 && minutes <= 0 && minutes >=9) {
 			ss1.style.display = "block";
@@ -319,7 +321,7 @@
 		if (hours == 10 && minutes >= 0 && minutes <=59) {
 			ss1.style.display = "block";
 			ss2.style.display = "block";
-			ss2.style.left = "50px";
+			ss2.style.left = random + "px";
 		}
 		if (hours = 0 && minutes <= 20 && minutes >=29) {
 			ss1.style.display = "block";
