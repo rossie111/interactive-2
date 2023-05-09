@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<style>
+		body {
+			height: 100vh;
+			width: 100vh;
+		}
+		img {
+			position: absolute;
+		}
+	</style>
+</head>
+<body>
+
+
+<script type="text/javascript">
+	const today = new Date();
+	const hours = today.getHours();
+	const minutes = today.getMinutes();
+
+	let count = 0;
+
+	function imageDisplay(src) {
+		const img = document.createElement("img");
+
+		img.src = src;
+
+		img.style.top = document.body.clientHeight * Math.random() + "px";
+		img.style.left = document.body.clientWidth * Math.random() + "px";
+
+		document.body.appendChild(img);
+	}
+
+	setInterval(() => {
+		if (minutes >= 0 && count == 0) {
+			imageDisplay("./assets/image1.jpg");
+			count++;
+		}
+		if (minutes >= 10 && count == 1) {
+			imageDisplay("./assets/image2.jpg");
+			count++;
+		}
+
+		if (minutes >= 20 && count == 2) {
+			imageDisplay("./assets/image3.jpg");
+			count++;
+		}
+		console.log(count);
+	}, 1000);
+
+</script>
+
+
+
+</body>
+</html>
