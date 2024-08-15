@@ -3,98 +3,115 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Image Display with PyScript</title>
+    <title>Image Clock</title>
     <style type="text/css">
         body {
+            margin: 0;
             height: 100vh;
             width: 100vw;
-            margin: 0;
             overflow: hidden;
         }
-        
+
         img {
             position: absolute;
-            height: 100vh;
-            object-fit: cover;
-            opacity: 0.7;
+            height: auto;
+            max-height: 100vh;
         }
     </style>
-    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
-    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
 </head>
 <body>
 
-<py-script>
-import os
+<script type="text/javascript">
+    const totalImages = 144;
+    const intervalMinutes = 10;
+    const imageBasePath = "./assets/2020_screenshot_";
+    const imageExtension = ".jpg";
 
-# Simulated file list to mimic os.listdir for example
-file_list = ["001_image.jpg", "002_image.jpg", "012_image.jpg", "144_image.jpg", 
-             "050_image.jpg", "099_image.jpg"]
+    function getRandomPosition() {
+        const top = Math.random() * (window.innerHeight - 100) + "px";
+        const left = Math.random() * (window.innerWidth - 100) + "px";
+        return { top, left };
+    }
 
-# Set the source directory (not needed in PyScript since we mimic the file list)
-# source_folder = "/path/to/your/source_folder"
-
-# List of image indices you're interested in
-selected_indices = ["001", "002", "012", "144"]
-
-# List to hold matching filenames
-matching_files = []
-
-# Iterate over files in the source folder
-for filename in file_list:
-    # Check if the filename matches any of the selected indices
-    if any(filename.startswith(index) for index in selected_indices):
-        matching_files.append(filename)
-
-# Create a JavaScript function to display images from Python
-def display_images(matching_files):
-    for filename in matching_files:
-        js_code = f"""
-        const img = document.createElement('img');
-        img.src = './assets/{filename}';
-        img.style.top = document.body.clientHeight * Math.random() + 'px';
-        img.style.left = document.body.clientWidth * Math.random() + 'px';
+    function displayImage(index) {
+        const img = document.createElement("img");
+        img.src = `${imageBasePath}${String(index + 1).padStart(3, '0')}${imageExtension}`;
+        const { top, left } = getRandomPosition();
+        img.style.top = top;
+        img.style.left = left;
         document.body.appendChild(img);
-        """
-        display(js_code)
+    }
 
-display_images(matching_files)
-</py-script>
+    function updateClock() {
+        const now = new Date();
+        const minutes = now.getMinutes();
+        const imageIndex = Math.floor(minutes / intervalMinutes);
+        if (imageIndex < totalImages) {
+            displayImage(imageIndex);
+        }
+    }
+
+    updateClock(); // Display the image immediately
+    setInterval(updateClock, 60000); // Check every minute
+</script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Image Clock</title>
+    <style type="text/css">
+        body {
+            margin: 0;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+        }
+
+        img {
+            position: absolute;
+            height: auto;
+            max-height: 100vh;
+        }
+    </style>
+</head>
+<body>
 
 <script type="text/javascript">
-    const today = new Date();
-    const hours = today.getHours();
-    const minutes = today.getMinutes();
+    const totalImages = 144;
+    const intervalMinutes = 10;
+    const imageBasePath = "./assets/2020_screenshot_";
+    const imageExtension = ".jpg";
 
-    const basePath = './assets/';
-    const imageExtension = '.jpg';
+    function getRandomPosition() {
+        const top = Math.random() * (window.innerHeight - 100) + "px";
+        const left = Math.random() * (window.innerWidth - 100) + "px";
+        return { top, left };
+    }
 
-    // Randomize Image Placement
-    function imageDisplay(src) {
+    function displayImage(index) {
         const img = document.createElement("img");
-
-        img.src = src;
-
-        img.style.top = document.body.clientHeight * Math.random() + "px";
-        img.style.left = document.body.clientWidth * Math.random() + "px";
-
+        img.src = `${imageBasePath}${String(index + 1).padStart(3, '0')}${imageExtension}`;
+        const { top, left } = getRandomPosition();
+        img.style.top = top;
+        img.style.left = left;
         document.body.appendChild(img);
     }
 
-    // Calculate the image index based on hours and minutes
-    function getImageIndex(hours, minutes) {
-        let imageIndex = hours * 6 + Math.floor(minutes / 10);
-        return imageIndex + 1; // Assuming indices start from 1
+    function updateClock() {
+        const now = new Date();
+        const minutes = now.getMinutes();
+        const imageIndex = Math.floor(minutes / intervalMinutes);
+        if (imageIndex < totalImages) {
+            displayImage(imageIndex);
+        }
     }
 
-    // Display the corresponding image
-    setInterval(() => {
-        const imageIndex = getImageIndex(hours, minutes);
-        if (imageIndex <= 105) {  // Assuming there are 105 images
-            imageDisplay(`${basePath}${String(imageIndex).padStart(3, '0')}${imageExtension}`);
-        }
-    }, 10000); // Adjust the interval as needed (10000 ms = 10 seconds)
-
+    updateClock(); // Display the image immediately
+    setInterval(updateClock, 60000); // Check every minute
 </script>
 
 </body>
