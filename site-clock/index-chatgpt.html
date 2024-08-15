@@ -3,60 +3,56 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Clock</title>
+    <title>Interactive Clock</title>
     <style type="text/css">
         body {
-            height: 100vh;
-            width: 100vw; /* Ensure the body uses the full viewport width */
             margin: 0;
-            overflow: hidden; /* Hide scrollbars if they appear */
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            position: relative;
         }
         img {
             position: absolute;
-            height: 100vh; /* Maintain full viewport height */
-            width: auto; /* Preserve aspect ratio */
+            max-height: 100vh;
+            max-width: 100vw;
+            object-fit: contain;
         }
     </style>
 </head>
 <body>
 
 <script type="text/javascript">
-    const totalImages = 144; // Total number of images
-    const imagePath = "./assets/2020_screenshot_"; // Base path for images
-    const fileExtension = ".jpg"; // Image file extension
-
-    function getCurrentImage() {
-        const now = new Date();
-        const minutes = now.getHours() * 60 + now.getMinutes(); // Total minutes from 00:00
-        const index = Math.floor(minutes / 10); // Get index based on 10-minute intervals
-        return `${imagePath}${String(index + 1).padStart(3, '0')}${fileExtension}`;
+    // Generate a random position within the viewport
+    function getRandomPosition() {
+        const x = window.innerWidth;
+        const y = window.innerHeight;
+        const randomX = Math.floor(Math.random() * x);
+        const randomY = Math.floor(Math.random() * y);
+        return { x: randomX, y: randomY };
     }
 
-    function imageDisplay(src) {
+    // Display a new image at a random position
+    function displayImage(imageIndex) {
         const img = document.createElement("img");
-        img.src = src;
-
-        // Random position on screen
-        img.style.top = Math.random() * (window.innerHeight - img.height) + "px";
-        img.style.left = Math.random() * (window.innerWidth - img.width) + "px";
-
+        img.src = `./assets/2020_screenshot_${imageIndex.toString().padStart(3, '0')}.jpg`;
+        const position = getRandomPosition();
+        img.style.left = `${position.x}px`;
+        img.style.top = `${position.y}px`;
         document.body.appendChild(img);
     }
 
+    // Set up the clock logic
     function updateClock() {
-        // Remove existing images to prevent clutter (if desired, otherwise comment this out)
-        // document.querySelectorAll('img').forEach(img => img.remove());
-
-        // Display current image
-        const imgSrc = getCurrentImage();
-        imageDisplay(imgSrc);
+        const now = new Date();
+        const minutes = now.getHours() * 60 + now.getMinutes();
+        const imageIndex = (minutes % 144) + 1; // Get image index from 1 to 144
+        displayImage(imageIndex);
     }
 
-    // Initial call
-    updateClock();
-
-    // Update every minute
-    setInterval(updateClock, 60000);
+    // Call updateClock every minute
+    updateClock(); // Call it immediately
+    setInterval(updateClock, 60000); // Every 60 seconds
 
 </script>
 
