@@ -3,69 +3,75 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Clock Images</title>
-    <style>
+    <title>Image Clock</title>
+    <style type="text/css">
         body {
             height: 100vh;
-            width: 100vw;
-            overflow: hidden;
+            width: 100vw; /* Use viewport width to cover the full width of the screen */
             margin: 0;
+            overflow: hidden; /* Prevent scrollbars from appearing */
             position: relative;
         }
+
         img {
             position: absolute;
-            height: 100vh; /* Adjust this as needed */
-            width: auto; /* Maintain aspect ratio */
+            max-height: 100vh;
+            max-width: 100vw;
+            object-fit: cover; /* Ensure images cover their container */
         }
     </style>
 </head>
 <body>
-<script>
+
+<script type="text/javascript">
     const totalImages = 144;
-    const images = Array.from({ length: totalImages }, (_, i) => `./assets/2020_screenshot_${String(i + 1).padStart(3, '0')}.jpg`);
-    let currentImageIndex = 0;
-    const imagesOnScreen = [];
-    
+    const imageBasePath = "./assets/2020_screenshot_";
+    let displayedImages = [];
+
     function getRandomPosition() {
-        const x = Math.random() * (window.innerWidth - 100); // Adjust 100 to image width
-        const y = Math.random() * (window.innerHeight - 100); // Adjust 100 to image height
-        return { x, y };
+        return {
+            top: Math.random() * (window.innerHeight - 100) + "px", // Adjust to prevent images from going out of view
+            left: Math.random() * (window.innerWidth - 100) + "px"
+        };
     }
-    
-    function addImage() {
-        if (currentImageIndex >= totalImages) return;
-        
-        const img = document.createElement('img');
-        img.src = images[currentImageIndex];
-        img.style.top = getRandomPosition().y + 'px';
-        img.style.left = getRandomPosition().x + 'px';
+
+    function displayImage(index) {
+        const img = document.createElement("img");
+        img.src = `${imageBasePath}${index.toString().padStart(3, '0')}.jpg`;
+        const { top, left } = getRandomPosition();
+        img.style.top = top;
+        img.style.left = left;
         document.body.appendChild(img);
-        
-        imagesOnScreen.push(img);
-        currentImageIndex++;
     }
-    
-    function updateImagePositions() {
-        imagesOnScreen.forEach(img => {
-            const { x, y } = getRandomPosition();
-            img.style.top = y + 'px';
-            img.style.left = x + 'px';
+
+    function updateImages() {
+        const now = new Date();
+        const hours = now.getHours();
+        const minutes = now.getMinutes();
+        const imageIndex = Math.floor(hours * 6 + minutes / 10) + 1; // Calculate the index based on time
+
+        if (imageIndex > 0 && imageIndex <= totalImages && !displayedImages.includes(imageIndex)) {
+            displayImage(imageIndex);
+            displayedImages.push(imageIndex);
+        }
+    }
+
+    function moveImages() {
+        const images = document.querySelectorAll("img");
+        images.forEach(img => {
+            const { top, left } = getRandomPosition();
+            img.style.top = top;
+            img.style.left = left;
         });
     }
-    
-    function startClock() {
-        addImage(); // Add initial image
-        
-        setInterval(() => {
-            updateImagePositions();
-        }, 60000); // Update positions every minute
-        
-        setInterval(() => {
-            addImage(); // Add a new image every 10 minutes
-        }, 600000); // 10 minutes in milliseconds
-    }
-    
-    startClock();
+
+    setInterval(() => {
+        updateImages();
+        moveImages();
+    }, 60000); // Update every minute
+
+    // Initial call to start the process
+    updateImages();
 </script>
 </body>
 </html>
