@@ -7,55 +7,57 @@
     <style type="text/css">
         body {
             height: 100vh;
-            width: 100vw;
+            width: 100vw; /* Ensure the body uses the full viewport width */
             margin: 0;
-            overflow: hidden;
-            position: relative;
+            overflow: hidden; /* Hide scrollbars if they appear */
         }
-
         img {
             position: absolute;
-            height: 100vh; /* Adjust size as needed */
-/*            width: 100px;  /* Adjust size as needed */*/
+            height: 100vh; /* Maintain full viewport height */
+            width: auto; /* Preserve aspect ratio */
         }
     </style>
 </head>
 <body>
 
 <script type="text/javascript">
-    // List of image URLs
-    const images = Array.from({length: 144}, (_, i) => `./assets/2020_screenshot_${(i+1).toString().padStart(3, '0')}.jpg`);
+    const totalImages = 144; // Total number of images
+    const imagePath = "./assets/2020_screenshot_"; // Base path for images
+    const fileExtension = ".jpg"; // Image file extension
 
-    // Function to create and add an image to the body
-    function createImage(src) {
+    function getCurrentImage() {
+        const now = new Date();
+        const minutes = now.getHours() * 60 + now.getMinutes(); // Total minutes from 00:00
+        const index = Math.floor(minutes / 10); // Get index based on 10-minute intervals
+        return `${imagePath}${String(index + 1).padStart(3, '0')}${fileExtension}`;
+    }
+
+    function imageDisplay(src) {
         const img = document.createElement("img");
         img.src = src;
-        img.style.top = Math.random() * (window.innerHeight - 100) + "px"; // Adjust for image size
-        img.style.left = Math.random() * (window.innerWidth - 100) + "px"; // Adjust for image size
+
+        // Random position on screen
+        img.style.top = Math.random() * (window.innerHeight - img.height) + "px";
+        img.style.left = Math.random() * (window.innerWidth - img.width) + "px";
+
         document.body.appendChild(img);
-        return img;
     }
 
-    // Function to show an image at a random interval
-    function showImage() {
-        const imgIndex = Math.floor((new Date().getMinutes() / 10) % 144);
-        createImage(images[imgIndex]);
+    function updateClock() {
+        // Remove existing images to prevent clutter (if desired, otherwise comment this out)
+        document.querySelectorAll('img').forEach(img => img.remove());
+
+        // Display current image
+        const imgSrc = getCurrentImage();
+        imageDisplay(imgSrc);
     }
 
-    // Function to reposition all images
-    function repositionImages() {
-        document.querySelectorAll("img").forEach(img => {
-            img.style.top = Math.random() * (window.innerHeight - 100) + "px"; // Adjust for image size
-            img.style.left = Math.random() * (window.innerWidth - 100) + "px"; // Adjust for image size
-        });
-    }
+    // Initial call
+    updateClock();
 
-    // Set intervals for showing an image and repositioning images
-    setInterval(showImage, 10 * 60 * 1000); // Every 10 minutes
-    setInterval(repositionImages, 60 * 1000); // Every minute
+    // Update every minute
+    setInterval(updateClock, 60000);
 
-    // Initial call to show an image
-    showImage();
 </script>
 
 </body>
